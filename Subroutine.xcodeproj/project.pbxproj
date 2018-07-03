@@ -14,6 +14,8 @@
 		3D18468920EBC000007C8301 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D18468720EBC000007C8301 /* Main.storyboard */; };
 		3D18468B20EBC001007C8301 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3D18468A20EBC001007C8301 /* Assets.xcassets */; };
 		3D18468E20EBC001007C8301 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D18468C20EBC001007C8301 /* LaunchScreen.storyboard */; };
+		3D18469820EBCC95007C8301 /* LargeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D18469720EBCC95007C8301 /* LargeButton.swift */; };
+		3DF1269720EBD33900E87BCE /* TaskCreateEditControllerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DF1269620EBD33900E87BCE /* TaskCreateEditControllerViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +30,8 @@
 		3D18468F20EBC001007C8301 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3D18469520EBC063007C8301 /* Main.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = Main.playground; path = Subroutine/Main.playground; sourceTree = "<group>"; };
 		3D18469620EBC07B007C8301 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		3D18469720EBCC95007C8301 /* LargeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LargeButton.swift; sourceTree = "<group>"; };
+		3DF1269620EBD33900E87BCE /* TaskCreateEditControllerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCreateEditControllerViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,13 +69,23 @@
 				3D18467E20EBBFFF007C8301 /* AppDelegate.swift */,
 				3D18468320EBBFFF007C8301 /* MasterViewController.swift */,
 				3D18468520EBC000007C8301 /* DetailViewController.swift */,
+				3DF1269620EBD33900E87BCE /* TaskCreateEditControllerViewController.swift */,
 				3D18468720EBC000007C8301 /* Main.storyboard */,
+				3D18469920EBCC9A007C8301 /* Custom Views */,
 				3D18468A20EBC001007C8301 /* Assets.xcassets */,
 				3D18468C20EBC001007C8301 /* LaunchScreen.storyboard */,
 				3D18468F20EBC001007C8301 /* Info.plist */,
 				3D18468020EBBFFF007C8301 /* Subroutine.xcdatamodeld */,
 			);
 			path = Subroutine;
+			sourceTree = "<group>";
+		};
+		3D18469920EBCC9A007C8301 /* Custom Views */ = {
+			isa = PBXGroup;
+			children = (
+				3D18469720EBCC95007C8301 /* LargeButton.swift */,
+			);
+			path = "Custom Views";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -146,7 +160,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				3D18467F20EBBFFF007C8301 /* AppDelegate.swift in Sources */,
+				3D18469820EBCC95007C8301 /* LargeButton.swift in Sources */,
 				3D18468220EBBFFF007C8301 /* Subroutine.xcdatamodeld in Sources */,
+				3DF1269720EBD33900E87BCE /* TaskCreateEditControllerViewController.swift in Sources */,
 				3D18468420EBBFFF007C8301 /* MasterViewController.swift in Sources */,
 				3D18468620EBC000007C8301 /* DetailViewController.swift in Sources */,
 			);
