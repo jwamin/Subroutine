@@ -20,8 +20,10 @@ class DetailViewController: UIViewController {
         if let detail = detailItem {
             if let label = detailDescriptionLabel {
                  var str = ""
-                for item in detail.tasks as! Set<Task>{
-                    str += item.title! + "\n"
+                for item in detail.tasks as! NSOrderedSet{
+                    let task = item as! Task
+                    str += task.title! + "\n"
+                    //print(item.title,index)
                 }
                 label.text = str
             }
@@ -34,7 +36,7 @@ class DetailViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         configureView()
         
-        print(detailItem?.tasks, detailItem?.tasks?.count)
+        //print(detailItem?.tasks, detailItem?.tasks?.count)
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(presentTaskPicker))
         addButton.addGestureRecognizer(tap)
