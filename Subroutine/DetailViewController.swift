@@ -23,7 +23,7 @@ class DetailViewController: UIViewController {
                 for item in detail.tasks as! NSOrderedSet{
                     let task = item as! Task
                     str += task.title! + "\n"
-                    //print(item.title,index)
+                    print("\(task.title!) \(detail.tasks?.index(of: item))")
                 }
                 label.text = str
             }
@@ -40,7 +40,7 @@ class DetailViewController: UIViewController {
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(presentTaskPicker))
         addButton.addGestureRecognizer(tap)
-        
+        //print(detailItem?.tasks)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -58,7 +58,23 @@ class DetailViewController: UIViewController {
     }
     
     @objc func presentTaskPicker(){
-        self.performSegue(withIdentifier: "presentTaskPicker", sender: self)
+        addButton.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
+        UIView.animate(withDuration: 0.2,
+                       delay: 0.1,
+                       usingSpringWithDamping: 10,
+                       initialSpringVelocity: 30,
+                       options: [.beginFromCurrentState,.allowUserInteraction],
+                       animations: {
+            
+            self.addButton.transform = .identity
+            
+        }) { (complete) in
+            if (complete){
+                self.performSegue(withIdentifier: "presentTaskPicker", sender: self)
+            }
+        }
+        
+        
     }
     
     func addItem(task:TaskStruct){
@@ -73,6 +89,7 @@ class DetailViewController: UIViewController {
         context.refresh(detailItem!, mergeChanges: true)
         do {
             try context.save()
+            print(detailItem?.tasks)
         } catch {
             // Replace this implementation with code to handle the error appropriately.
             // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
@@ -86,6 +103,31 @@ class DetailViewController: UIViewController {
         didSet {
             // Update the view.
             configureView()
+        }
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        arbitraryReorder()
+    }
+    
+    func arbitraryReorder(){
+        if(detailItem!.tasks!.count>2){
+            var mutable = NSMutableOrderedSet(orderedSet: (detailItem?.tasks)!)
+        
+        mutable.exchangeObject(at: 2, withObjectAt: 0)
+        detailItem?.tasks = NSOrderedSet(orderedSet: mutable)
+        context.refresh(detailItem!, mergeChanges: true)
+        
+        do {
+            try context.save()
+            configureView()
+        } catch {
+            // Replace this implementation with code to handle the error appropriately.
+            // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+            let nserror = error as NSError
+            fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+        }
+        
         }
     }
 
