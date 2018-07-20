@@ -94,11 +94,12 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         return true
     }
 
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            let context = fetchedResultsController.managedObjectContext
-            context.delete(fetchedResultsController.object(at: indexPath))
-                
+    
+    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        
+        let context = fetchedResultsController.managedObjectContext
+        
+        func update(context:NSManagedObjectContext){
             do {
                 try context.save()
             } catch {
@@ -108,6 +109,19 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
                 fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
             }
         }
+        
+        let edit = UITableViewRowAction.init(style: .normal, title: "Rename Routine", handler: {(action,path) in
+            return
+        })
+        
+        let delete = UITableViewRowAction.init(style: .destructive, title: "Delete", handler: {(action,path) in
+            
+            context.delete(self.fetchedResultsController.object(at: path))
+            update(context: context)
+        })
+        let options:[UITableViewRowAction] = [delete,edit]
+        return options
+        
     }
 
     func configureCell(_ cell: UITableViewCell, withRoutine routine:Routine) {

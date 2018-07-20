@@ -22,8 +22,8 @@ class DetailViewController: UIViewController {
                  var str = ""
                 for item in detail.tasks as! NSOrderedSet{
                     let task = item as! Task
-                    str += task.title! + "\n"
-                    print("\(task.title!) \(detail.tasks?.index(of: item))")
+                    str += task.title! + " ("+String(Float(task.duration) / 60.0) + ")\n"
+                    print("\(task.title!) \(task.duration) \(detail.tasks?.index(of: item))")
                 }
                 label.text = str
             }
