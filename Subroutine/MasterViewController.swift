@@ -13,14 +13,14 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
 
     var detailViewController: DetailViewController? = nil
     var managedObjectContext: NSManagedObjectContext? = nil
-
+    private var tempName:String?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         navigationItem.leftBarButtonItem = editButtonItem
 
-        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(insertNewObject(_:)))
+        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(createNewWithTitle))
         navigationItem.rightBarButtonItem = addButton
         if let split = splitViewController {
             let controllers = split.viewControllers
@@ -38,12 +38,30 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         // Dispose of any resources that can be recreated.
     }
 
+    @objc func createNewWithTitle(){
+        let alert = UIAlertController(title: "New Routine", message: "What should it be called", preferredStyle: .alert)
+        alert.addTextField { (field) in
+            field.placeholder = "Name"
+        }
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) in
+            self.tempName = alert.textFields![0].text
+            self.insertNewObject(self)
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        present(alert, animated: true, completion: nil)
+    }
+    
     @objc
     func insertNewObject(_ sender: Any) {
         let context = self.fetchedResultsController.managedObjectContext
         let newRoutine = Routine(context: context)
              
         // If appropriate, configure the new managed object.
+        
+        guard let title = tempName else {
+            return
+        }
+        newRoutine.title = title
         newRoutine.time = Date()
 
         // Save the context.
@@ -56,7 +74,27 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
             fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
         }
     }
+    
+    func renameRoutineAtIndexPath(indexPath:IndexPath){
+        let object = fetchedResultsController.object(at: indexPath) as Routine
+        let alert = UIAlertController(title: "Rename Routine", message: "What should it be called", preferredStyle: .alert)
+        alert.addTextField { (field) in
+            field.placeholder = object.title ?? "Name"
+        }
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) in
+            object.title = alert.textFields![0].text
+            self.updateObject(routine:object)
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        present(alert, animated: true, completion: nil)
+    }
 
+    func updateObject(routine:Routine){
+        fetchedResultsController.managedObjectContext.refresh(routine, mergeChanges: true)
+        update(context: fetchedResultsController.managedObjectContext)
+    }
+    
+    
     // MARK: - Segues
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -94,24 +132,40 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         return true
     }
 
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            let context = fetchedResultsController.managedObjectContext
-            context.delete(fetchedResultsController.object(at: indexPath))
-                
-            do {
-                try context.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nserror = error as NSError
-                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-            }
+    private func update(context:NSManagedObjectContext){
+        do {
+            try context.save()
+        } catch {
+            // Replace this implementation with code to handle the error appropriately.
+            // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+            let nserror = error as NSError
+            fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
         }
+        
+    }
+    
+    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        
+        let context = fetchedResultsController.managedObjectContext
+        
+
+        
+        let edit = UITableViewRowAction.init(style: .normal, title: "Rename Routine", handler: {(action,path) in
+            self.renameRoutineAtIndexPath(indexPath: path)
+        })
+        
+        let delete = UITableViewRowAction.init(style: .destructive, title: "Delete", handler: {(action,path) in
+            
+            context.delete(self.fetchedResultsController.object(at: path))
+            self.update(context: context)
+        })
+        let options:[UITableViewRowAction] = [delete,edit]
+        return options
+        
     }
 
     func configureCell(_ cell: UITableViewCell, withRoutine routine:Routine) {
-        cell.textLabel!.text = routine.time?.description
+        cell.textLabel!.text = routine.title ?? routine.time?.description
     }
 
     // MARK: - Fetched results controller

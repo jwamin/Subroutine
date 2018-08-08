@@ -33,6 +33,7 @@ class TaskCreateEditControllerViewController: UIViewController {
         
         print("prepairing for segue")
         if let destination = parentView{
+            print(durationPicker.countDownDuration)
             let task = TaskStruct(title: titleField.text ?? "default title", description: descriptionField.text ?? "default description", duration: durationPicker.countDownDuration)
             destination.addItem(task: task)
             navigationController?.popViewController(animated: true)
