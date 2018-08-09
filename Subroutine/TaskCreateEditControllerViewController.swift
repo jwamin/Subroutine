@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TaskCreateEditControllerViewController: UIViewController {
+class TaskCreateEditControllerViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var titleField: UITextField!
     @IBOutlet weak var descriptionField: UITextField!
@@ -19,14 +19,28 @@ class TaskCreateEditControllerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        
+       titleField.delegate = self
+       descriptionField.delegate = self
+        durationPicker.datePickerMode = .countDownTimer
+        durationPicker.addTarget(self, action: #selector(datePickerChanged(_:)), for: .valueChanged)
         
         // Do any additional setup after loading the view.
     }
-
+    
+    @objc func datePickerChanged(_ sender:UIDatePicker){
+        print(sender.countDownDuration)
+    }
+    
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
     
     @IBAction func unwindSegue(segue:UIStoryboardSegue){
@@ -40,6 +54,9 @@ class TaskCreateEditControllerViewController: UIViewController {
         }
 
     }
+    
+ 
+    
     
     /*
     // MARK: - Navigation

@@ -87,16 +87,16 @@
                                         <rect key="frame" x="0.0" y="0.0" width="343" height="170.5"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" returnKeyType="next"/>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Description" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Jq8-IO-ZTP">
                                         <rect key="frame" x="0.0" y="170.5" width="343" height="170.5"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                     </textField>
-                                    <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="countDownTimer" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="vKn-TD-9Xk">
-                                        <rect key="frame" x="0.0" y="341" width="320" height="216"/>
+                                    <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="countDownTimer" countDownDuration="60" minuteInterval="1" useCurrentDate="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vKn-TD-9Xk">
+                                        <rect key="frame" x="0.0" y="341" width="343" height="216"/>
                                         <date key="date" timeIntervalSinceReferenceDate="552325995.36305594">
                                             <!--2018-07-03 15:53:15 +0000-->
                                         </date>
@@ -111,6 +111,7 @@
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="Nhq-mx-QKw" secondAttribute="trailing" id="0oH-so-zDV"/>
+                                    <constraint firstAttribute="trailing" secondItem="vKn-TD-9Xk" secondAttribute="trailing" id="8De-Mv-5KO"/>
                                     <constraint firstItem="Jq8-IO-ZTP" firstAttribute="width" secondItem="Nhq-mx-QKw" secondAttribute="width" id="9eB-9b-H0R"/>
                                     <constraint firstItem="Nhq-mx-QKw" firstAttribute="top" secondItem="jY1-x7-k7o" secondAttribute="top" id="A0y-4c-NcD"/>
                                     <constraint firstItem="ebv-3v-6jH" firstAttribute="centerX" secondItem="jY1-x7-k7o" secondAttribute="centerX" id="Hbc-VC-duH"/>
@@ -141,7 +142,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uMX-NN-q1g" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="T5X-5y-KmW" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1828" y="48"/>
+            <point key="canvasLocation" x="1868" y="128"/>
         </scene>
         <!--Split View Controller-->
         <scene sceneID="Nki-YV-4Qg">

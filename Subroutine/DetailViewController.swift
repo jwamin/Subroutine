@@ -22,7 +22,7 @@ class DetailViewController: UIViewController {
                  var str = ""
                 for item in detail.tasks as! NSOrderedSet{
                     let task = item as! Task
-                    str += task.title! + " ("+String(Float(task.duration) / 60.0) + ")\n"
+                    str += task.title! + " (" + String(task.duration) + ")\n"
                     print("\(task.title!) \(task.duration) \(detail.tasks?.index(of: item))")
                 }
                 label.text = str
@@ -82,7 +82,7 @@ class DetailViewController: UIViewController {
         let persistentTask = Task(context: context)
         persistentTask.title = task.title
         persistentTask.taskDescription = task.description
-        persistentTask.duration = 20 //Int16(Int(task.duration))
+        persistentTask.duration = task.duration //Int16(Int(task.duration))
         persistentTask.routine = detailItem
         
         detailItem?.addToTasks(persistentTask)
